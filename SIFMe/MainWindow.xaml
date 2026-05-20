@@ -1,0 +1,22 @@
+﻿<Window x:Class="SIFMe.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SIFMe"
+        xmlns:objects="clr-namespace:SIFMe.Objects"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowStyle="None" WindowState="Maximized" Topmost="True" Background="Transparent" IsHitTestVisible="True" AllowsTransparency="True">
+    <Grid Name="Space">
+        <Canvas Name="Formspace" Visibility="Visible" Background="Transparent">
+            <objects:forms_bar Panel.ZIndex="98" x:Name="FBar" Width="60" Canvas.Left="10" Canvas.Top="10" IsHitTestVisible="True"></objects:forms_bar>
+            <objects:form_sellector Panel.ZIndex="99" x:Name="FSelector" Canvas.Left="70" Canvas.Top="12" Visibility="Collapsed" IsHitTestVisible="True"></objects:form_sellector>
+        </Canvas>
+        <Canvas Name="DragSpace" Panel.ZIndex="100" Visibility="Collapsed">
+            <Canvas.Background>
+                <SolidColorBrush Color="White" Opacity="0.01"/>
+            </Canvas.Background>
+            <Border Name="DragBox" Canvas.Left="0" Canvas.Top="0" Width="50" Height="50" IsHitTestVisible="True"></Border>
+        </Canvas>
+    </Grid>
+</Window>
