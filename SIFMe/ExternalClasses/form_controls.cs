@@ -1,18 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace SIFMe.Forms
+namespace SIFMe.ExternalClasses
 {
-
-    public partial class basic_form : UserControl
+    public abstract class form_controls : UserControl
     {
+        public FrameworkElement Dragger { get; set; }
         [DllImport("user32.dll")]
         static extern bool GetCursorPos(out POINT lpPoint);
         public struct POINT { public int X; public int Y; }
+        protected abstract POINT GetBottomBorderPos();
         public bool resizable
         {
             get => _resizable; set
@@ -20,16 +25,14 @@ namespace SIFMe.Forms
                 if (_resizable != value) { _resizable = value; ResizeStateChange(); }
             }
         }
-        private bool _resizable = false;
+        protected bool _resizable = false;
         public Canvas parent;
-        private DispatcherTimer timer;
-        public basic_form()
+        protected DispatcherTimer timer;
+        public form_controls()
         {
-            InitializeComponent();
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromMilliseconds(20);
             timer.Tick += Timer_Tick;
-            BottomBorder.MouseLeftButtonDown += (s, e) => { resizable = true; };
         }
         private void ResizeStateChange()
         {
@@ -52,7 +55,7 @@ namespace SIFMe.Forms
                 }
                 double cursorX = p.X * dpiX;
                 double cursorY = p.Y * dpiY;
-                Point framePos = BottomBorder.TranslatePoint(new Point(0, 0), this);
+                POINT framePos = GetBottomBorderPos();
                 Point mouseOffset = new Point(cursorX - Canvas.GetLeft(this) - framePos.X, cursorY - Canvas.GetTop(this) - framePos.Y);
                 if (this.Width < 75 && mouseOffset.X < 0) { this.Width = 74; return; }
                 this.Width += mouseOffset.X;

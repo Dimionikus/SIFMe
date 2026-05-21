@@ -29,14 +29,14 @@ namespace SIFMe.ExternalClasses
             }
         }
         private int _state = 0;
-        basic_form window;
+        form_controls window;
         public Canvas formsapce;
         public MainWindow parent;
         public form(int index)
         {
             switch (index)
             {
-                case 0: window = new basic_form(); break;
+                case 0: window = new browser_form(); break;
             }
             window.MouseLeftButtonDown += OnWindowClick;
             window.Dragger.MouseLeftButtonDown += OnDragStarted;
@@ -52,8 +52,8 @@ namespace SIFMe.ExternalClasses
             if (window == null) return;
             switch (_state)
             {
-                case 0: { layer = 0; formsapce.Children.Remove(window); window.parent = null; } break;
-                case 1: { if (!formsapce.Children.Contains(window)) formsapce.Children.Add(window); window.parent = formsapce; window.Visibility = System.Windows.Visibility.Visible; layer = -1; parent.ResortLayers(); } break;
+                //case 0: { layer = 0; formsapce.Children.Remove(window); window.parent = null; } break;
+                //case 1: { if (!formsapce.Children.Contains(window)) formsapce.Children.Add(window); window.parent = formsapce; window.Visibility = System.Windows.Visibility.Visible; layer = -1; parent.ResortLayers(); } break;
                 case 2: window.Visibility = System.Windows.Visibility.Collapsed; break;
             }
         }
