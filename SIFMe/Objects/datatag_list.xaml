@@ -5,16 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SIFMe.Objects"
              mc:Ignorable="d" 
-             d:DesignHeight="40" d:DesignWidth="150">
+             d:DesignHeight="40" d:DesignWidth="150" Height="40" Width="150" MaxWidth="150" Margin="0,0,5,0">
     <Grid>
-        <Border Background="Black" BorderBrush="Black">
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="15"/>
-                </Style>
-            </Border.Style>
+        <ComboBox Name="cb" Height="30" IsEnabled="False" DisplayMemberPath="tag" SelectedValuePath="ID"></ComboBox>
+        <TextBox x:Name="tb" Width="150" Height="30" Margin="0,0,0,0" IsEnabled="False"></TextBox>
+        <Border Name="wrapped" Background="Transparent" Visibility="Collapsed">
         </Border>
-        <ComboBox Name="cb" Height="30"></ComboBox>
-        <TextBox Name="tb" Width="130" Height="30" Margin="0,0,16,0"></TextBox>
     </Grid>
 </UserControl>

@@ -18,6 +18,7 @@ namespace SIFMe.ExternalClasses
         }
         private int _layer = 0;
         public string icon_path = "";
+        int form_type = 0;
         /// <summary>
         /// 0-wraped; 1-showed; 2-dragging.
         /// </summary>
@@ -34,6 +35,7 @@ namespace SIFMe.ExternalClasses
         public MainWindow parent;
         public form(int index)
         {
+            form_type = index;
             switch (index)
             {
                 case 0: window = new browser_form(); break;
@@ -48,12 +50,13 @@ namespace SIFMe.ExternalClasses
         }
         private void OnChangeState()
         {
+            if (form_type == 0) { if ((window as browser_form).controller == null) (window as browser_form).controller = parent.bc; }
             if (formsapce == null && parent != null) formsapce = parent.Formspace;
             if (window == null) return;
             switch (_state)
             {
-                //case 0: { layer = 0; formsapce.Children.Remove(window); window.parent = null; } break;
-                //case 1: { if (!formsapce.Children.Contains(window)) formsapce.Children.Add(window); window.parent = formsapce; window.Visibility = System.Windows.Visibility.Visible; layer = -1; parent.ResortLayers(); } break;
+                case 0: { layer = 0; formsapce.Children.Remove(window); window.parent = null; } break;
+                case 1: { if (!formsapce.Children.Contains(window)) formsapce.Children.Add(window); window.parent = formsapce; window.Visibility = System.Windows.Visibility.Visible; layer = -1; parent.ResortLayers(); } break;
                 case 2: window.Visibility = System.Windows.Visibility.Collapsed; break;
             }
         }

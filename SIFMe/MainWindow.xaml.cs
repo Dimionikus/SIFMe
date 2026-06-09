@@ -1,4 +1,5 @@
-﻿using SIFMe.ExternalClasses;
+﻿using SIFMe.DBConnector;
+using SIFMe.ExternalClasses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -11,11 +12,13 @@ namespace SIFMe
     {
         List<form> forms = new List<form>();
         form dragged_form;
+        public browser_controller bc;
         public MainWindow()
         {
             InitializeComponent();
             FBar.parent = this;
             FSelector.parent = this;
+            bc = new browser_controller();
             this.PreviewMouseMove += MouseMove;
         }
         public void CreateForm(int form_type)

@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SIFMe.Forms"
+             xmlns:objects="clr-namespace:SIFMe.Objects"
              xmlns:classes="clr-namespace:SIFMe.ExternalClasses"
              mc:Ignorable="d" 
                           d:DesignHeight="450" d:DesignWidth="800" Height="450" Width="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/SIFMe;component/Styles/form_style.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/SIFMe;component/Styles/browser_style.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -20,11 +21,127 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition Width="10"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Border Name="SBW2" Width="40" Height="40" Background="{StaticResource Gradient2}" Margin="0,0,0,120"></Border>
+        <Border Name="SBW1" Width="40" Height="40" Background="{StaticResource Gradient2}" Margin="0,0,0,230"></Border>
         <Border Margin="25,0,0,0" Width="25" Style="{StaticResource TopBorder}"></Border>
-        <Border x:Name="Dragger" Width="50" Height="50" Style="{StaticResource Dragger}"></Border>
+        <Image Name="SB2" Width="50" Height="50" Source="pack://application:,,,/SIFMe;component/Sprites/switch1_d.png" Margin="0,0,0,120" MouseLeftButtonDown="Switch" MouseEnter="Switch" MouseLeave="Switch"></Image>
+        <Image Name="SB1" Width="50" Height="50" Source="pack://application:,,,/SIFMe;component/Sprites/switch2_d.png" Margin="0,0,0,230" MouseLeftButtonDown="Switch" MouseEnter="Switch" MouseLeave="Switch"></Image>
+        <Border x:Name="Dragger_" Width="50" Height="50" Style="{StaticResource Dragger}"></Border>
         <Border Name="BottomBorder" Grid.Column="2" Style="{StaticResource BotomBorder}"></Border>
-        <Canvas Grid.Column="1" Background="AliceBlue">
-            <TextBlock Text="Hello world!"></TextBlock>
-        </Canvas>
+        <Canvas Grid.Column="1" Background="{StaticResource GreenEdgeGradientBrush}" Opacity="0.8" IsHitTestVisible="False"></Canvas>
+        <Grid Name="Browser" Grid.Column="1" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="120"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="FilterList" Orientation="Horizontal"></StackPanel>
+                <StackPanel Grid.Column="1" VerticalAlignment="Center" Orientation="Horizontal">
+                    <Button Click="AddFilter" Content="+" Width="35" Height="35" Margin="0,0,5,0"></Button>
+                    <Button Click="ApplyFilter" Content="?" Width="35" Height="35" Margin="0,0,5,0"></Button>
+                    <Button Click="RemoveFilterModeSwitch" Content="-" Width="35" Height="35" Margin="0,0,5,0"></Button>
+                </StackPanel>
+            </Grid>
+            <ListView x:Name="ResultList" Background="Transparent" Grid.Row="1">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Width="50" MouseEnter="ItemHover" MouseLeave="ItemHoverEnd">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="25"/>
+                            </Grid.RowDefinitions>
+                            <objects:link_view Grid.RowSpan="2"></objects:link_view>
+                            <StackPanel Name="buttons" Grid.Row="1" Orientation="Horizontal" Visibility="Collapsed">
+                                <Button Name="del" Content="X" Width="25" Click="DeleteLink"></Button>
+                                <Button Name="custom" Content="?" Width="25" Click="UpdateLink"></Button>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Name="Redactor" Grid.Column="1" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="45"/>
+                <RowDefinition Height="405"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Name="TBtn" Content="Теги" Height="35" Width="110" Margin="0,0,10,0" Click="Switch2"/>
+                    <Button Name="FBtn" Content="Файлы" Height="35" Width="110" Click="Switch2"/>
+                </StackPanel>
+                <StackPanel Name="TagManager" Grid.Column="1" Orientation="Horizontal">
+                    <Canvas Background="Black" Height="35" Width="2" Margin="0,0,10,0"></Canvas>
+                    <TextBox Name="TagName" Height="35" Width="110"></TextBox>
+                    <Button Content="+" Width="35" Height="35" Click="NewTag"></Button>
+                </StackPanel>
+                <StackPanel Name="LinkManager" Grid.Column="1" Orientation="Horizontal" Visibility="Collapsed">
+                    <Canvas Background="Black" Height="35" Width="2" Margin="0,0,10,0"></Canvas>
+                    <TextBox Name="LinkBox" Height="35" Width="110"></TextBox>
+                    <Button Content="?" Width="35" Height="35" Margin="0,0,10,0" Click="GetLink"></Button>
+                    <Button Content="+" Width="35" Height="35" Click="NewLink"></Button>
+                </StackPanel>
+            </Grid>
+            <ListView Name="TagList" Grid.Row="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{Binding ID}"></TextBlock>
+                            <TextBlock Text="{Binding tag}" Grid.Column="1"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Name="LinkEditor" Grid.Row="1" ClipToBounds="True" Visibility="Collapsed">
+                <StackPanel Orientation="Vertical">
+                    <Border Height="100">
+                        <Canvas>
+                            <Image Source="{Binding img}" RenderOptions.BitmapScalingMode="NearestNeighbor" Width="48" Height="48" Canvas.Top="10" Canvas.Left="35"></Image>
+                            <TextBlock Text="{Binding name}" Canvas.Top="10" Canvas.Left="120" Width="250"></TextBlock>
+                            <TextBox Text="{Binding link}" Canvas.Bottom="40" Canvas.Left="120" Width="250" Height="25" IsReadOnly="True"></TextBox>
+                            <Button Name="UpdLink" Content="?" Canvas.Bottom="40" Canvas.Left="370" Width="35" Height="25" Click="GetLink"></Button>
+                            <objects:datatag_list x:Name="selector" Canvas.Bottom="5" Canvas.Left="10" Height="25" Width="120" MaxWidth="120" select_status="2"></objects:datatag_list>
+                            <Button Content="Добавить тег" Canvas.Bottom="5" Canvas.Left="130" Width="85" Height="25" Click="AddTag"></Button>
+                            <Button Content="Убрать тег" Canvas.Bottom="5" Canvas.Left="220" Width="85" Height="25"></Button>
+                            <Button Content="Убрать все теги" Canvas.Bottom="5" Canvas.Left="310" Width="95" Height="25"></Button>
+                        </Canvas>
+                    </Border>
+                    <ListView Name="EditorTagList" Height="260" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding tag}" Width="100"></TextBlock>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <StackPanel Height="45" Orientation="Horizontal">
+                        <Button Content="Сохранить" Height="35" Width="110" Margin="10,0,0,0" Click="SaveLink"></Button>
+                        <Button Content="Отмена"  Height="35" Width="110" Margin="10,0,0,0" Click="CloseLinkEditor"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <Canvas Background="{StaticResource TiledTextureBrush}" Grid.Column="1" IsHitTestVisible="False"></Canvas>
     </Grid>
 </classes:form_controls>
