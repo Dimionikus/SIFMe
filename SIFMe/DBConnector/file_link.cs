@@ -5,11 +5,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Drawing;
 using System.Windows.Interop;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SIFMe.DBConnector
 {
-    public class file_link
+    public class filelink
     {
+        [Key]
         public int ID { get; set; }
         string link_ = "";
         public string link { get => link_; set {
@@ -31,11 +34,12 @@ namespace SIFMe.DBConnector
                 }
             } 
         }
-        public string tags { get; set; }
-        public ImageSource img { get; set; }
         public string name { get; set; }
-        public file_link() { ID = 0; }
-        public file_link(int _id, string _link, string _tags) 
+        public string tags { get; set; }
+        [NotMapped]
+        public ImageSource img { get; set; }
+        public filelink() { ID = 0; }
+        public filelink(int _id, string _link, string _tags) 
         {
             this.ID = _id; this.link = _link; this.tags = _tags;
         }

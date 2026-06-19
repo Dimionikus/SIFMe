@@ -14,6 +14,7 @@ namespace SIFMe.Objects
         {
             InitializeComponent();
             buttons.Add(CreaF0);
+            buttons.Add(CreaF1);
         }
         private void Create(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {

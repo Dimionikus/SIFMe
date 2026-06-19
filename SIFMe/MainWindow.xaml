@@ -11,6 +11,7 @@
         <Canvas Name="Formspace" Visibility="Visible" Background="Transparent">
             <objects:forms_bar Panel.ZIndex="98" x:Name="FBar" Width="60" Canvas.Left="10" Canvas.Top="10" IsHitTestVisible="True"></objects:forms_bar>
             <objects:form_sellector Panel.ZIndex="99" x:Name="FSelector" Canvas.Left="70" Canvas.Top="12" Visibility="Collapsed" IsHitTestVisible="True"></objects:form_sellector>
+            <objects:notification_list x:Name="nl" Canvas.Bottom="45" Canvas.Right="-240"/>
         </Canvas>
         <Canvas Name="DragSpace" Panel.ZIndex="100" Visibility="Collapsed">
             <Canvas.Background>

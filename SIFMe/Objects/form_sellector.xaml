@@ -21,6 +21,12 @@
                 </Border>
                 <Border.DataContext>0</Border.DataContext>
             </Border>
+            <Border Name="CreaF1" Height="50" Width="50" MouseLeftButtonUp="Create">
+                <Border Width="30" Height="30" Style="{StaticResource AddForm2}">
+                    <Image Source="pack://application:,,,/SIFMe;component/Sprites/planercreatericon.png" RenderOptions.BitmapScalingMode="NearestNeighbor"></Image>
+                </Border>
+                <Border.DataContext>1</Border.DataContext>
+            </Border>
         </StackPanel>
     </Grid>
 </UserControl>

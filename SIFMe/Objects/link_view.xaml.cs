@@ -23,23 +23,12 @@ namespace SIFMe.Objects
         public link_view()
         {
             InitializeComponent();
-            this.MouseEnter += Link_view_MouseEnter;
-            this.MouseLeave += Link_view_MouseLeave;
             this.MouseDoubleClick += Link_view_MouseDoubleClick;
         }
 
         private void Link_view_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            try { Process.Start((this.DataContext as file_link).link); } catch { MessageBox.Show("Неудалось запустить(открыть) файл, возможно неверно указан путь"); } 
-        }
-
-        private void Link_view_MouseLeave(object sender, MouseEventArgs e)
-        {
-            labl.Visibility = Visibility.Visible;
-        }
-        private void Link_view_MouseEnter(object sender, MouseEventArgs e)
-        {
-            labl.Visibility = Visibility.Collapsed;
+            try { Process.Start((this.DataContext as filelink).link); } catch { MessageBox.Show("Неудалось запустить(открыть) файл, возможно неверно указан путь"); } 
         }
     }
 }

@@ -118,9 +118,9 @@
                             <TextBox Text="{Binding link}" Canvas.Bottom="40" Canvas.Left="120" Width="250" Height="25" IsReadOnly="True"></TextBox>
                             <Button Name="UpdLink" Content="?" Canvas.Bottom="40" Canvas.Left="370" Width="35" Height="25" Click="GetLink"></Button>
                             <objects:datatag_list x:Name="selector" Canvas.Bottom="5" Canvas.Left="10" Height="25" Width="120" MaxWidth="120" select_status="2"></objects:datatag_list>
-                            <Button Content="Добавить тег" Canvas.Bottom="5" Canvas.Left="130" Width="85" Height="25" Click="AddTag"></Button>
-                            <Button Content="Убрать тег" Canvas.Bottom="5" Canvas.Left="220" Width="85" Height="25"></Button>
-                            <Button Content="Убрать все теги" Canvas.Bottom="5" Canvas.Left="310" Width="95" Height="25"></Button>
+                            <Button Content="Добавить тег" Canvas.Bottom="5" Canvas.Left="130" Width="100" Height="25" Click="AddTag"></Button>
+                            <Button Content="Убрать тег" Canvas.Bottom="5" Canvas.Left="235" Width="110" Height="25" Click="RemoveTag"></Button>
+                            <Button Content="Убрать все" Canvas.Bottom="5" Canvas.Left="350" Width="115" Height="25" Click="ClearTags"></Button>
                         </Canvas>
                     </Border>
                     <ListView Name="EditorTagList" Height="260" ScrollViewer.HorizontalScrollBarVisibility="Disabled">

@@ -39,6 +39,7 @@ namespace SIFMe.ExternalClasses
             switch (index)
             {
                 case 0: window = new browser_form(); break;
+                case 1: window = new planer_form(); break;
             }
             window.MouseLeftButtonDown += OnWindowClick;
             window.Dragger.MouseLeftButtonDown += OnDragStarted;
@@ -50,7 +51,8 @@ namespace SIFMe.ExternalClasses
         }
         private void OnChangeState()
         {
-            if (form_type == 0) { if ((window as browser_form).controller == null) (window as browser_form).controller = parent.bc; }
+            if (form_type == 0) { if ((window as browser_form).controller == null) (window as browser_form).controller = parent.bc; (window as browser_form).current_page = 1; }
+            if (form_type == 1) { if ((window as planer_form).controller == null) (window as planer_form).controller = parent.nc; (window as planer_form).UpdateNotList();  }
             if (formsapce == null && parent != null) formsapce = parent.Formspace;
             if (window == null) return;
             switch (_state)

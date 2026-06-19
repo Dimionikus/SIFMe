@@ -33,13 +33,13 @@ namespace SIFMe.Forms
             return img;
         }
         int _current_page = 0;
-        int current_page { get => _current_page; set { 
+        public int current_page { get => _current_page; set { 
                 if (_current_page != value) _current_page = value;
                 SB2.Source = getImageSource("switch1_d.png");
                 SB1.Source = getImageSource("switch2_d.png");
                 Browser.Visibility = Visibility.Collapsed; Redactor.Visibility = Visibility.Collapsed; SBW1.Width = 40; SBW2.Width = 40;
                 if (_current_page == 1) { Browser.Visibility = Visibility.Visible; SBW1.Width = 20; SB1.Source = getImageSource("switch2_e.png"); if (filters.Count <= 0 && controller != null) UpdateLinkList(); }
-                if (_current_page == 2) { Redactor.Visibility = Visibility.Visible; SBW2.Width = 20; SB2.Source = getImageSource("switch1_e.png"); }
+                if (_current_page == 2) { UpdateAllTagLists(); Redactor.Visibility = Visibility.Visible; SBW2.Width = 20; SB2.Source = getImageSource("switch1_e.png"); }
             } 
         }
         public browser_form()
@@ -120,21 +120,25 @@ namespace SIFMe.Forms
         }
         private void ItemHover(object sender, MouseEventArgs e)
         {
+            ((sender as Grid).Children[0] as link_view).labl.Visibility = Visibility.Collapsed;
             (sender as Grid).Children[1].Visibility = Visibility.Visible;
         }
         private void ItemHoverEnd(object sender, MouseEventArgs e)
         {
+            ((sender as Grid).Children[0] as link_view).labl.Visibility = Visibility.Visible;
             (sender as Grid).Children[1].Visibility = Visibility.Collapsed;
         }
-        file_link redacting_link = null;
+        filelink redacting_link = null;
         private void NewLink(object sender, RoutedEventArgs e)
         {
             if (editor_is_busy == false) { 
                 if (LinkBox.Text != "" || !string.IsNullOrWhiteSpace(LinkBox.Text)) {
                     editor_is_busy=true;
-                    redacting_link = new file_link();
+                    redacting_link = new filelink();
                     redacting_link.link = LinkBox.Text;
                     LinkBox.Text = "";
+                    selector.tb.DataContext = GetDatatagList();
+                    selector.tb.Text = "";
                     LinkEditor.DataContext = redacting_link;
                 }
                 else MessageBox.Show("Отсутствует ссылка на файл");
@@ -142,22 +146,33 @@ namespace SIFMe.Forms
         }
         public void DeleteLink(object sender, RoutedEventArgs e)
         {
-            file_link link = (sender as Control).DataContext as file_link;
-            controller.del_link(link);
-            UpdateLinkList();
+            filelink link = (sender as Control).DataContext as filelink;
+            if (MessageBox.Show("Ты уверен что хочешь удалить ссылку на '" + link.name+"'?", "Удаление ссылки", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                controller.del_link(link);
+                UpdateLinkList();
+            }
         }
         public void UpdateLink(object sender, RoutedEventArgs e)
         {
-            file_link link = (sender as Control).DataContext as file_link;
+            filelink link = (sender as Control).DataContext as filelink;
             if (editor_is_busy == false)
             {
                 editor_is_busy = true;
                 redacting_link = link;
                 LinkBox.Text = "";
+                selector.tb.DataContext = GetDatatagList();
+                selector.tb.Text = "";
                 LinkEditor.DataContext = redacting_link;
                 current_page = 2;
                 editor_switch = 2;
-                
+                var loaded_tags = redacting_link.tags.Split('/');
+                List<datatag> tags = new List<datatag>();
+                foreach (string s in loaded_tags)
+                {
+                    if (controller.tag_list.Exists(t => t.ID == s)) tags.Add(controller.tag_list.First(t => t.ID == s)); 
+                }
+                EditorTagList.ItemsSource = null; editor_tags = tags; EditorTagList.ItemsSource = tags;
             }
             else MessageBox.Show("Редактор занят!");
         }
@@ -191,8 +206,6 @@ namespace SIFMe.Forms
             if (TagName.Text == "" || string.IsNullOrWhiteSpace(TagName.Text)) { MessageBox.Show("Отсутствует название тега"); return; }
             string result = controller.new_tag(TagName.Text);
             if (result != "") { MessageBox.Show(result); return; }
-            TagList.ItemsSource = null;
-            TagList.ItemsSource = controller.tag_list;
             UpdateAllTagLists();
         }
         List<datatag> editor_tags = new List<datatag>();
@@ -205,8 +218,23 @@ namespace SIFMe.Forms
             EditorTagList.ItemsSource = null;
             EditorTagList.ItemsSource = editor_tags;
         }
+        private void RemoveTag(object sender, RoutedEventArgs e)
+        {
+            if (EditorTagList.SelectedItem == null) { MessageBox.Show("Тег не выбран! Выберите тег который хотите удалить из списка и попробуйте снова."); return; } 
+            editor_tags.Remove(EditorTagList.SelectedItem as datatag);
+            EditorTagList.ItemsSource = null;
+            EditorTagList.ItemsSource = editor_tags;
+        }
+        private void ClearTags(object sender, RoutedEventArgs e)
+        {
+            editor_tags.Clear();
+            EditorTagList.ItemsSource = null;
+            EditorTagList.ItemsSource = editor_tags;
+        }
         private void UpdateAllTagLists()
         {
+            TagList.ItemsSource = null;
+            TagList.ItemsSource = GetDatatagList();
             selector.tb.DataContext = GetDatatagList();
             foreach (datatag_list filter in FilterList.Children) 
             { 
@@ -252,7 +280,7 @@ namespace SIFMe.Forms
         }
         private void ApplyFilter(object sender, RoutedEventArgs e)
         {
-            List<file_link> results = controller.link_list.ToList();
+            List<filelink> results = controller.link_list.ToList();
             foreach (datatag_list filter in filters)
             {
                 if (filter.current_datatag != null)

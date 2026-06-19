@@ -2,19 +2,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <LinearGradientBrush x:Key="GreenEdgeGradientBrush"
                      StartPoint="1,0" EndPoint="0,0" Opacity="0.9">
-        <GradientStop Color="#FF669900" Offset="0"/>
-        <GradientStop Color="#FF006600" Offset="0.1"/>
-        <GradientStop Color="#FF006600" Offset="0.9"/>
-        <GradientStop Color="#FF669900" Offset="1"/>
+        <GradientStop Color="#6666FF" Offset="0"/>
+        <GradientStop Color="#440088" Offset="0.1"/>
+        <GradientStop Color="#440088" Offset="0.9"/>
+        <GradientStop Color="#6666FF" Offset="1"/>
     </LinearGradientBrush>
     <Style TargetType="TextBlock">
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="Foreground" Value="#FF66FF66"></Setter>
+        <Setter Property="Foreground" Value="#6666FF"></Setter>
         <Setter Property="FontFamily" Value="Arial Black"></Setter>
     </Style>
     <Style TargetType="Button">
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="Foreground" Value="#FF66FF66"></Setter>
+        <Setter Property="Foreground" Value="#6666FF"></Setter>
         <Setter Property="FontFamily" Value="Arial Black"></Setter>
         <Setter Property="FontSize" Value="18"></Setter>
     </Style>
@@ -25,7 +25,7 @@
     </Style>
     <Style TargetType="ListView">
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="Foreground" Value="#FF66FF66"></Setter>
+        <Setter Property="Foreground" Value="#6666FF"></Setter>
         <Setter Property="FontFamily" Value="Arial Black"></Setter>
     </Style>
     <ImageBrush x:Key="TiledTextureBrush"
@@ -57,9 +57,9 @@
                 <Rectangle>
                     <Rectangle.Fill>
                         <LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
-                            <GradientStop Offset="0.1" Color="#119911"></GradientStop>
-                            <GradientStop Offset="0.4" Color="#116611"></GradientStop>
-                            <GradientStop Offset="1" Color="#119911"></GradientStop>
+                            <GradientStop Offset="0.1" Color="#666699"></GradientStop>
+                            <GradientStop Offset="0.4" Color="#444488"></GradientStop>
+                            <GradientStop Offset="1" Color="#666699"></GradientStop>
                         </LinearGradientBrush>
                     </Rectangle.Fill>
                     <Rectangle.OpacityMask>
@@ -76,13 +76,13 @@
                 <Rectangle>
                     <Rectangle.Fill>
                         <LinearGradientBrush StartPoint="0.5 0" EndPoint="0.5 1">
-                            <GradientStop Offset="0.1" Color="#119911"></GradientStop>
-                            <GradientStop Offset="0.4" Color="#116611"></GradientStop>
-                            <GradientStop Offset="1" Color="#119911"></GradientStop>
+                            <GradientStop Offset="0.1" Color="#666699"></GradientStop>
+                            <GradientStop Offset="0.4" Color="#444488"></GradientStop>
+                            <GradientStop Offset="1" Color="#666699"></GradientStop>
                         </LinearGradientBrush>
                     </Rectangle.Fill>
                     <Rectangle.OpacityMask>
-                        <ImageBrush ImageSource="pack://application:,,,/SIFMe;component/Sprites/browsericon.png" RenderOptions.BitmapScalingMode="NearestNeighbor"></ImageBrush>
+                        <ImageBrush ImageSource="pack://application:,,,/SIFMe;component/Sprites/planericon.png" RenderOptions.BitmapScalingMode="NearestNeighbor"></ImageBrush>
                     </Rectangle.OpacityMask>
                 </Rectangle>
             </Grid>

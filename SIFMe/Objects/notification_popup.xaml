@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="SIFMe.Objects.notification_popup"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SIFMe.Objects"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="250">
+    <Grid>
+        <Border Background="#6666FF" CornerRadius="20"></Border>
+        <StackPanel>
+            <TextBlock Text="{Binding title}" Width="230" Height="20" FontSize="18" FontFamily="Arial Black" TextAlignment="Center" Foreground="White" Margin="0,0,20,0"></TextBlock>
+            <TextBlock Background="White" Text="{Binding description}" Width="230" Height="80" FontSize="14" TextWrapping="Wrap" FontFamily="Arial Black" TextAlignment="Left" Foreground="Black" Margin="0,0,20,0"></TextBlock>
+        </StackPanel>
+        <Canvas>
+            <Button Name="cancel" Background="#6666FF" BorderThickness="0" Content="X" Width="20" Height="20" FontFamily="Arial Black" Canvas.Right="0"></Button>
+        </Canvas>
+    </Grid>
+</UserControl>

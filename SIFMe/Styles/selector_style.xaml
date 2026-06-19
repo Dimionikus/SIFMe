@@ -35,8 +35,25 @@
         </DoubleAnimation>
     </Storyboard>
     <Style x:Key="AddForm1" TargetType="Border">
-        <Setter Property="Background" Value="{StaticResource BaseButtonBrush}"/>
-        <Setter Property="BorderBrush" Value="#7f7f7f"/>
+        <Setter Property="Background" Value="#FF006600"/>
+        <Setter Property="BorderBrush" Value="#FF66FF66"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="25"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderThickness" Value="5"/>
+                <Trigger.EnterActions>
+                    <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource Popup}"></BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard HandoffBehavior="SnapshotAndReplace" Storyboard="{StaticResource Popdown}"></BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="AddForm2" TargetType="Border">
+        <Setter Property="Background" Value="#440088"/>
+        <Setter Property="BorderBrush" Value="#6666FF"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="CornerRadius" Value="25"/>
         <Style.Triggers>

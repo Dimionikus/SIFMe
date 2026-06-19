@@ -13,11 +13,14 @@ namespace SIFMe
         List<form> forms = new List<form>();
         form dragged_form;
         public browser_controller bc;
+        public notification_controller nc;
         public MainWindow()
         {
             InitializeComponent();
             FBar.parent = this;
             FSelector.parent = this;
+            nc = new notification_controller();
+            nc.nl = nl;
             bc = new browser_controller();
             this.PreviewMouseMove += MouseMove;
         }
